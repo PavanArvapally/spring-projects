@@ -12,6 +12,7 @@ import com.springboot.workers.jdbcexample.util.DatabaseConnection;
 public class WorkerRepository implements WorkerDAO{
 	Connection connection;
 
+
     public WorkerRepository() throws ClassNotFoundException, SQLException {
         connection = DatabaseConnection.getConnection();
     }
