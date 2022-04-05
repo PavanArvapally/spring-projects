@@ -15,40 +15,40 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.workers.crudapi.model.Worker;
-import com.springboot.workers.crudapi.repository.WorkerRepository;
+import com.springboot.workers.crudapi.service.WorkerService;
 
 @RestController
 @RequestMapping("/api/v1")
 public class WorkerController {
 	@Autowired
-	private WorkerRepository repository;
+	private WorkerService service;
 
 	@GetMapping("/workers/{id}")
 	public Worker getWorker(@PathVariable Integer id) {
-		return repository.getWorker(id);
+		return service.read(id);
 	}
 
 	@GetMapping("/workers")
 	public List<Worker> showWorkers() {
-		return repository.getWorkers();
+		return service.readAll();
 	}
 
 	@PostMapping("/workers")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Boolean create(@RequestBody Worker worker) {
-		return (repository.add(worker) == 1);
+		return (service.createWorker(worker));
 	}
 
 	@PatchMapping("/workers/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public Boolean update(@PathVariable Integer id, @RequestBody Worker worker) {
-		return (repository.replace(worker) == 1);
-		
+		return (service.update(id, worker));
+
 	}
-	
+
 	@DeleteMapping("/workers/{id}")
 	public Boolean delete(@PathVariable Integer id) {
-		return (repository.delete(id) == 1);
+		return (service.delete(id));
 	}
 
 }
